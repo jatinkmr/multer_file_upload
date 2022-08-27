@@ -18,6 +18,11 @@ const uploadFile = multer({
     storage: storageForDocs
 }).single("image")
 
+// for uploading multiple file
+const multipleStorage = multer.memoryStorage();
+const uploadMultiple = multer({
+    storage: multipleStorage
+})
 
 router.get('/', Controller.homecontroller)
 
@@ -41,5 +46,8 @@ router.post('/singleupload', (req, res, next) => {
         }
     })
 }, Controller.singleUploadController)
+
+// for multiple files
+router.post('/mutlipleupload', uploadMultiple.array('myFiles', 4), Controller.mutlipleUploadController)
 
 module.exports = router

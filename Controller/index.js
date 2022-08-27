@@ -24,8 +24,27 @@ const singleUploadController = async (req, res, next) => {
     }
 };
 
+const mutlipleUploadController = async (req, res, next) => {
+    try {
+        const file = req.files
+        if (!file) {
+            const error = new Error('Please upload a file')
+            error.httpStatusCode = 400
+            return next(error)
+        }
+        res.status(200).json({
+            error: false,
+            message: 'File uploaded successfully',
+            fileData: file
+        })
+    } catch (error) {
+        next(error)
+    }
+};
+
 
 module.exports = {
     homecontroller,
-    singleUploadController
+    singleUploadController,
+    mutlipleUploadController
 };
